@@ -1,0 +1,56 @@
+<!-- add/remove/set gates here -->
+
+<!-- show gate list -->
+
+<div class="controls">
+  <p-button icon="pi pi-refresh" label="Refresh" (click)="getItems()"></p-button>
+  <p-button icon="pi pi-plus" label="Add Plate" (click)="add()" *ngIf="authService.user.permission.canAddToBlacklist"></p-button>
+</div>
+
+
+<p-table #dt [columns]="cols" [loading]="loading" styleClass="ui-table-gates" [value]="items" [paginator]="false"
+  [rows]="14" dataKey="id" selectionMode="single" [(selection)]="selectedItem">
+  <ng-template pTemplate="caption">
+    List of Blacklisted Plates
+    <div class="ui-table-globalfilter-container">
+      <input type="text" pInputText size="50" placeholder="Search"
+        (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:250px;">
+    </div>
+  </ng-template>
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngSwitch]="col.field"
+        [ngClass]="{'snapshot-header': col.field == 'snapshot', 'startDate-header': col.field == 'startDate'}">
+        {{col.header}}
+        <p-sortIcon [field]="col.field"></p-sortIcon>
+        <input *ngSwitchCase="'plate'" pInputText type="text" placeholder="Contains" class="ui-column-filter"
+          style="width: 100%;" (input)="dt.filter($event.target.value, col.field, 'contains')">
+          <input *ngSwitchCase="'notes'" pInputText type="text" placeholder="Contains" class="ui-column-filter"
+          style="width: 100%;" (input)="dt.filter($event.target.value, col.field, 'contains')">
+          <input *ngSwitchCase="'user'" pInputText type="text" placeholder="Contains" class="ui-column-filter"
+          style="width: 100%;" (input)="dt.filter($event.target.value, col.field, 'contains')">
+      </th>
+      <th style=" text-align: center;">
+
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns">
+    <tr [pSelectableRow]="rowData" [pEditableRow]="rowData">
+      <td>{{rowData.plate}}</td>
+      <td>{{rowData.notes}}</td>
+      <td>{{rowData.userstr}}</td>
+      <td>{{rowData.createdAt}}</td>
+      <td>
+        <button pButton *ngIf="authService.user.permission.canRemoveFromBlacklist"  class="ui-button-danger" icon="fa fa-close" label="Delete" (click)="delete(rowData)"></button>
+        <button pButton *ngIf="authService.user.permission.canAddToBlacklist" style="margin-left: 5px;" class="ui-button-secondary" icon="fa fa-edit" label="Edit" (click)="edit(rowData)"></button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<app-form-generator [item]="selectedItem" [formModel]="formModel" [(show)]="showEditor" [title]="formTitle"
+  [showReset]="showFormReset" [showDelete]="showFormDelete" [showClear]="showFormClear" [showCancel]="showFormCancel"
+  [showSpinner]="showFormSpinner" (onCancel)="onCancelClicked($event)" (onDelete)="onDeleteClicked($event)" (onSave)="onSaveClicked($event)"
+  (onDelete)="onDeleteClicked($event)">
+</app-form-generator>

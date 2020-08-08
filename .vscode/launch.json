@@ -1,0 +1,55 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch Chrome against localhost, with sourcemaps",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:3001/",
+      "runtimeArgs": [
+        "--user-data-dir",
+        "--remote-debugging-port=9222"
+      ],
+      "sourceMaps": true,
+      "trace": true,
+      "webRoot": "${workspaceRoot}",
+      "sourceMapPathOverrides": {
+        "webpack:/*": "${webRoot}/*"
+      },
+      "userDataDir": "${workspaceRoot}/.vscode/chrome"
+    },
+    {
+      "name": "Attach to Chrome, with sourcemaps",
+      "type": "chrome",
+      "request": "attach",
+      "url": "http://192.168.99.100:3001/",
+      "port": 9222,
+      "sourceMaps": true,
+      "trace": true,
+      "webRoot": "${workspaceRoot}"
+    },
+    {
+      "name": "Launch Edge against localhost, with sourcemaps",
+      "type": "edge",
+      "request": "launch",
+      "url": "http://localhost:3001/login",
+      "runtimeArgs": [
+        "--user-data-dir"
+      ],
+      "sourceMaps": true,
+      "trace": true,
+      "webRoot": "${workspaceRoot}",
+      "userDataDir": "${workspaceRoot}/.vscode/chrome"
+    },
+    {
+      "name": "Attach to Edge, with sourcemaps",
+      "type": "edge",
+      "request": "attach",
+      "url": "http://localhost:3001/login",
+      "port": 9222,
+      "sourceMaps": true,
+      "trace": true,
+      "webRoot": "${workspaceRoot}/dist/"
+    }
+  ]
+}

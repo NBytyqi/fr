@@ -1,0 +1,16 @@
+.main-container {
+  min-width: 400px;
+  min-height: 550px;
+}
+
+.button-box button {
+  margin: 5px;
+}
+
+.button-box {
+  text-align: center;
+}
+
+.control-box {
+  text-align: center;
+}

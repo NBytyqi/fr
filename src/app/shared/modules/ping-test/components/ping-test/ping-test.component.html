@@ -1,0 +1,26 @@
+<div class="">
+  <p>enter tne user/pass to run the tests as</p>
+  user
+  <input type="text" pInputText [(ngModel)]="username" /> pass
+  <input type="text" pInputText [(ngModel)]="password" />
+  <button class="btn btn-wide btn-primary md-margin" (click)="StartTests()" [disabled]="data.testRunning">Start Tests</button>
+  <br>
+  system id/serial<input size="40" type="text" pInputText [(ngModel)]="systemid" />
+  <p>Auth Status is:{{data.authStatus}}</p>
+  <p>Currently working on {{data.workingon}}</p>
+
+  <p>Currently:</p>
+  <li>Total Time: {{data.time}}</li>
+  <li>Request Speed (round trip): {{data.speed}}ms</li>
+  <li>Sending Packet #: {{data.count}}</li>
+  <li>Received Packet #: {{data.lastPing}}</li>
+  <p></p>
+  <p>Results</p>
+
+  <li *ngFor="let result of results">{{result}}</li>
+
+  <!-- <br>
+  Schedule:
+  {{schedule}} -->
+
+</div>

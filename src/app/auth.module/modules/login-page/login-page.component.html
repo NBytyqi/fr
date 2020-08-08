@@ -1,0 +1,51 @@
+<!-- start: LOGIN -->
+
+<div class="row login-container">
+  <div class="main-login col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4 col-lg-2 col-lg-offset-5">
+    <div class="logo text-center">
+      <img src="assets/images/rclogo_medium.png" alt="{{appGlobal.name}}" class="img-responsive" />
+    </div>
+    <p class="text-center text-dark text-bold text-extra-large margin-top-15">
+      Welcome back
+    </p>
+    <p class="text-center">
+      Enter your name and password to log in.
+    </p>
+    <!-- start: LOGIN BOX -->
+    <div class="box-login">
+      <form [formGroup]="loginForm" class="form-login" (ngSubmit)="login(loginForm.value)">
+
+        <div *ngIf="!isLoadingBackend" class="form-group margin-bottom-sm">
+          <app-icon-input inputtype="text" lefticon="ft ft-user" placeholder="Username or Email" formControlName="username" [controlref]="loginForm" [validationIcon]="false"></app-icon-input>
+        </div>
+
+        <div *ngIf="!isLoadingBackend" class="form-group ">
+          <app-icon-input inputtype="password" lefticon="ft ft-key" placeholder="Password" formControlName="password" [controlref]="loginForm" [validationIcon]="false"></app-icon-input>
+        </div>
+        <div *ngIf="!isLoadingBackend" class="text-center">
+          <a [routerLink]="['/auth/forgotpassword']"> I forgot my password </a>
+        </div>
+        <div class="form-actions">
+          <button [ladda]="isLoggingIn" type="submit" class="btn btn-block btn-red">
+                        {{loginButtonDesc}}
+                    </button>
+          <div *ngIf="!isLoadingBackend" class="checkbox clip-check check-primary">
+            <input type="checkbox" id="remember" value="1" formControlName="rememberme">
+            <label for="remember"> Keep me signed in </label>
+          </div>
+        </div>
+        <!-- <div class="new-account text-center">
+          Don't have an account yet?
+          <a [routerLink]="['/auth/register']"> Create an account </a>
+        </div> -->
+      </form>
+      <!-- start: COPYRIGHT -->
+      <div class="copyright">
+        {{appGlobal.year}} &copy; {{ appGlobal.author }}.
+      </div>
+      <!-- end: COPYRIGHT -->
+    </div>
+    <!-- end: LOGIN BOX -->
+  </div>
+</div>
+<!-- end: LOGIN -->

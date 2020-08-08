@@ -1,0 +1,110 @@
+<!-- add/remove/set gates here -->
+
+<!-- show gate list -->
+
+<div class="controls">
+  <p-button icon="pi pi-refresh" label="Refresh" (click)="getItems()"></p-button>
+</div>
+<div style="width:100%;display: flex;justify-content: flex-end;">
+  <button [disabled]="items?.length <=0" (click)="printShortPDF()" pButton pRipple type="button" label="Simpler"></button>
+  <button  [disabled]="items?.length <=0" style="margin: 0 10px;"  (click)="printDetailedPDF()" pButton pRipple type="button" label="Detailed"></button>
+</div>
+
+<p-table #dt [columns]="cols" [loading]="loading" styleClass="ui-table-gates" [value]="filteredItems" [paginator]="false" [rows]="14" dataKey="id"
+selectionMode="single" [(selection)]="selectedItem">
+<ng-template pTemplate="caption">
+  List of Events
+  <div class="">
+    <input type="text" pInputText size="50" placeholder="Search"
+      (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:250px;">
+      
+      <div style="float: left;">
+        from <p-calendar styleClass="cal" [(ngModel)]="fromDate" [showIcon]="true" (onSelect)="onSelectFrom($event)"></p-calendar>
+        to <p-calendar styleClass="cal" [(ngModel)]="toDate" [showIcon]="true" (onSelect)="onSelectTo($event)"></p-calendar> &nbsp;
+        <p-button  icon="pi pi-times" label="Clear Dates" (click)="clearDates()"></p-button>
+      </div>
+
+
+  </div>
+</ng-template>
+<ng-template pTemplate="header" let-columns>
+  <tr>
+    <th style="width: 3em">
+      
+    </th>
+    <th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngSwitch]="col.field"
+    [ngClass]="{'snapshot-header': col.field == 'snapshot', 'startDate-header': col.field == 'startDate'}"
+    >
+      {{col.header}}
+      <p-sortIcon [field]="col.field"></p-sortIcon>
+      <input *ngSwitchCase="'gateName'" pInputText type="text" placeholder="Contains" class="ui-column-filter"
+        style="width: 100%;" (input)="dt.filter($event.target.value, col.field, 'contains')">
+      <input *ngSwitchCase="'plate'" pInputText type="text" placeholder="Contains" class="ui-column-filter"
+        style="width: 100%;" (input)="dt.filter($event.target.value, col.field, 'contains')">
+        <!-- <input *ngSwitchCase="'startDate'" pInputText type="text" placeholder="Contains" class="ui-column-filter"
+        style="width: 100%;" (input)="dt.filter($event.target.value, col.field, 'contains')"> -->
+        <input *ngSwitchCase="'userstr'" pInputText type="text" placeholder="Contains" class="ui-column-filter"
+        style="width: 100%;" (input)="dt.filter($event.target.value, col.field, 'contains')">
+    </th>
+    <th style=" text-align: center;">
+
+    </th>
+  </tr>
+</ng-template>
+<ng-template pTemplate="body" let-rowData let-columns="columns">
+  <tr class="ui-selectable-row">
+    <td style="width: 3em">
+      <p-checkbox [binary]="true" (onChange)="onRowCheckboxChanged(rowData)" ></p-checkbox>
+    </td>
+    <td [pSelectableRow]="rowData" [pEditableRow]="rowData"><a (mouseover)="viewImage($event, rowData)" (mouseleave)="plateImageOverlay.toggle($event)"><img style="width: 100%" src="/api/history/snapshotsmall/{{rowData.snapshotId}}?token={{authService.token}}" alt="Thumbnail"></a></td>
+    <td [pSelectableRow]="rowData" [pEditableRow]="rowData">{{rowData.dateTimeStr}}</td>
+    <td [pSelectableRow]="rowData" [pEditableRow]="rowData">{{rowData.gateName}}</td>
+    <!-- <td><a (mouseover)="viewImage($event, rowData)" (mouseleave)="plateImageOverlay.toggle($event)"><i class="fa fa-camera"></i> {{rowData.plate}}</a></td> -->
+    <td [pSelectableRow]="rowData" [pEditableRow]="rowData">
+      <div class="plate-box">
+        <div class="text-center" [ngStyle]="{ 'background': rowData.color }">
+          {{rowData.country}}
+        </div>
+        <div class="number-info">
+          <div>{{rowData.number}}</div>
+          <div class="separator"></div>
+          <div>{{rowData.literal}}</div>
+        </div>
+      </div>
+    </td>
+    <td [pSelectableRow]="rowData" [pEditableRow]="rowData" [ngStyle]="{ 'color': rowData.color }">
+      {{rowData.class}}
+    </td>
+    <td [pSelectableRow]="rowData" [pEditableRow]="rowData">{{rowData.userstr}}</td>
+    <td style="text-align: center;">
+      <i *ngIf="rowData.isBlacklisted"  class="fa fa-close" style="color: red; font-size: 36px;"></i>
+    </td>
+    <td [pSelectableRow]="rowData" [pEditableRow]="rowData" style="text-align: center;">
+      <i *ngIf="rowData.isOverride"  class="fa fa-check" style="color: green; font-size: 36px;"></i>
+    </td>
+    <td [pSelectableRow]="rowData" [pEditableRow]="rowData" style="text-align: center;">
+      <i *ngIf="rowData.isApproved"  class="fa fa-check" style="color: green; font-size: 36px;"></i>
+    </td>
+    <td [pSelectableRow]="rowData" [pEditableRow]="rowData" style="text-align: center;">
+      <i *ngIf="rowData.isDenied"  class="fa fa-close" style="color: red; font-size: 36px;"></i>
+    </td>
+    <td [pSelectableRow]="rowData" [pEditableRow]="rowData"><a (click)="viewVideo(rowData)"><i class="fa fa-video-camera"></i> {{rowData.durationStr}}</a> &nbsp; <a href="/api/video/download/{{rowData.recordingId}}?token={{authService.token}}"><i class="fa fa-download"></i></a></td>
+    <td>
+      <button pButton *ngIf="authService.user.permission.canDelete"  class="ui-button-danger" icon="fa fa-close" label="Delete" (click)="delete(rowData)"></button>
+    </td>
+  </tr>
+</ng-template>
+</p-table>
+
+<p-overlayPanel #plateImageOverlay appendTo="body">
+<img [src]="plateImageUrl" alt="Plate Image" />
+</p-overlayPanel>
+
+<app-form-generator [item]="selectedItem" [formModel]="formModel" [(show)]="showEditor" [title]="formTitle"
+[showReset]="showFormReset" [showDelete]="showFormDelete" [showClear]="showFormClear" [showCancel]="showFormCancel"
+[showSpinner]="showFormSpinner" (onCancel)="onCancelClicked($event)" (onDelete)="onDeleteClicked($event)">
+</app-form-generator>
+
+<p-dialog header="Video" styleClass="hls-dialog" [modal]="true" [(visible)]="showVideoDialog" (onHide)="videoDialogClosed($event)">
+<video [src]="videoSrc" controls muted autoplay playsinline></video>
+</p-dialog>

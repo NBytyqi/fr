@@ -1,0 +1,23 @@
+<!-- start: FOOTER -->
+<div [ngClass]="app.layout.layoutName"
+[class.app-boxed-page]="app.layout.isBoxedPage"
+[class.app-mobile]="app.isMobile"
+[class.app-navbar-fixed]="app.layout.isNavbarFixed"
+[class.app-left-sidebar-closed]="app.layout.isLeftSidebarClosed && !app.isSmallDevice"
+[class.app-left-sidebar-fixed]="app.layout.isLeftSidebarFixed"
+[class.app-right-sidebar-open]="!app.layout.isRightSidebarClosed"
+[class.app-mobile-slide-out]="(app.isSmallDevice && !app.layout.isLeftSidebarClosed)"
+[class.app-footer-fixed]="app.layout.isFooterFixed">
+
+<footer class="hidden-print" >
+  <div class="footer-inner">
+    <div class="pull-left">
+      &copy; {{app.year}} <span class="text-bold text-uppercase">{{ app.author }} {{'v' + app.version}}</span>. <span>All rights reserved</span>
+    </div>
+    <div class="pull-right">
+      <a class="go-top" (click)="toTheTop()"><i class="ti-angle-up"></i></a>
+    </div>
+  </div>
+</footer>
+</div>
+<!-- end: FOOTER -->

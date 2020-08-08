@@ -1,0 +1,146 @@
+<div [ngClass]="app.layout.layoutName" [class.app-navbar-fixed]="app.layout.isNavbarFixed" [class.app-left-sidebar-closed]="app.layout.isLeftSidebarClosed"
+  [class.app-left-sidebar-fixed]="app.layout.isLeftSidebarFixed" [class.app-right-sidebar-open]="!app.layout.isRightSidebarClosed"
+  [class.app-mobile-slide-out]="app.isSmallDevice && !app.layout.isLeftSidebarMobileClosed">
+
+  <header class="navbar navbar-default navbar-static-top hidden-print">
+    <!-- start: NAVBAR HEADER -->
+    <div class="navbar-header">
+      <button class="menu-mobile-toggler btn no-radius pull-left hidden-md hidden-lg" id="horizontal-menu-toggler" (click)="toggleLeftSidebar()"
+        v-pressable>
+            <i class="fa fa-bars"></i>
+        </button>
+      <button class="sidebar-mobile-toggler btn no-radius pull-left hidden-md hidden-lg" id="sidebar-toggler" (click)="toggleLeftSidebar()"
+        v-pressable>
+            <i class="fa fa-bars"></i>
+        </button>
+      <a class="navbar-brand" (click)="logoClicked()"> <img class="topleftlogo" [src]="app.layout.logo" [alt]="app.name" /> </a>
+      <a class="navbar-brand navbar-brand-collapsed" [routerLink]="['dashboard']"> <img [src]="app.layout.logoCollapsed" alt="" /> </a>
+      <button class="btn pull-right menu-toggler visible-xs-block" id="menu-toggler" (click)="mobileFolderCollapsed = !mobileFolderCollapsed"
+        v-pressable>
+            <i [ngClass]="mobileFolderCollapsed ? 'fa fa-folder' : 'fa fa-folder-open'"></i> <small><i class="fa fa-caret-down margin-left-5"></i></small>
+        </button>
+    </div>
+    <!-- end: NAVBAR HEADER -->
+    <!-- start: NAVBAR COLLAPSE -->
+    <div [@menuDrawer]="getMenuState()" class="navbar-collapse" [class.impersonating]="dataService.isImpersonatingUser">
+      <ul class="nav navbar-left hidden-sm hidden-xs">
+        <li class="sidebar-toggler-wrapper">
+          <div>
+            <button href class="btn sidebar-toggler visible-md visible-lg" (click)="toggleLeftSidebar()" v-pressable>
+                        <i class="fa fa-bars"></i>
+                    </button>
+          </div>
+        </li>
+        <li>
+          <a (click)="toggleFullscreen()"> <i class="fa fa-expand" *ngIf="!fullscreen.isFullScreen()"></i> <i class="fa fa-compress" *ngIf="fullscreen.isFullScreen()"></i></a>
+        </li>
+        <li *ngIf="dataService.impersonationUser">
+          <div class="impersonation-button">
+            <button type="button" pButton class="ui-button-danger" (click)="endImpersonation()"
+              label="End Impersonation of: {{dataService.currentUser.email}}" icon="fa fa-close"></button>
+          </div>
+        </li>
+        <li>
+          <h4 class="mainTitle hidden-sm hidden-xs" [class.impersonating]="dataService.isImpersonatingUser">{{app.currentPageTitle}}</h4>
+        </li>
+        <!--<li>
+                <form role="search" class="navbar-form main-search">
+                    <div class="form-group">
+                        <input type="text" placeholder="Search..." class="form-control">
+                        <button class="btn search-button" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </form>
+            </li>-->
+      </ul>
+      <ul class="nav navbar-right" [appFullHeight]="'window'" ctFullHeightExclusion="#header" ctFullHeightIf="app.isSmallDevice">
+        <!-- start: MESSAGES DROPDOWN -->
+        <li *ngIf="false" dropdown class="dropdown" (isOpenChange)="messageDropdownToggled()">
+          <a class="dropdown-toggle" dropdownToggle>
+            <!--<app-notification-icon count='msgCount'>
+                        <i class="fa fa-envelope"></i>
+                    </app-notification-icon>-->
+            <i class="fa fa-picture-o"></i>
+          </a>
+          <ul *dropdownMenu class="dropdown-menu dropdown-light dropdown-messages dropdown-large ">
+            <li>
+              <span class="dropdown-header"> Unread messages</span>
+            </li>
+            <li>
+              <div class="drop-down-wrapper ps-container">
+                <ul>
+
+                  <li class="unread" *ngFor="let message of messages">
+                    <a [ngClass]="{ unread: !message.read }">
+                      <div class="clearfix">
+                        <div class="thread-image">
+                          <img [src]="message.avatar && message.avatar || noAvatarImg" alt="" class="img-responsive img-rounded">
+                        </div>
+                        <div class="thread-content">
+                          <span class="author">{{message.from}}</span>
+                          <span class="preview">{{ message.content | stripTags | shorten: 100 }}</span>
+                          <span class="time"> {{ message.date | date: "MM/dd/yyyy 'at' h:mma" }}</span>
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+
+                </ul>
+              </div>
+            </li>
+            <li class="view-all">
+              <a> See All </a>
+            </li>
+          </ul>
+        </li>
+
+        <!-- end: MESSAGES DROPDOWN -->
+        <!-- start: ACTIVITIES DROPDOWN -->
+        <li *ngIf="false" class="dropdown" dropdown (isOpenChange)="activitiesDropdownToggled()">
+          <a class="dropdown-toggle" dropdownToggle><i class="fa fa-bell"></i></a>
+          <ul *dropdownMenu class="dropdown-menu dropdown-light dropdown-messages dropdown-large animated fadeInUpShort">
+            <li>
+              <span class="dropdown-item dropdown-header"> You have new notifications</span>
+            </li>
+            <li>
+              <div class="drop-down-wrapper ps-container">
+                <div class="list-group no-margin">
+                  <a class="media list-group-item"> <img class="img-circle" alt="..." src="assets/images/avatar-1.jpg"> <span class="media-body block no-margin"> Use awesome animate.css <small class="block text-grey">10 minutes ago</small> </span> </a>
+                  <a class="media list-group-item"> <span class="media-body block no-margin"> 1.0 initial released <small class="block text-grey">1 hour ago</small> </span> </a>
+                </div>
+              </div>
+            </li>
+            <li class="view-all">
+              <a> See All </a>
+            </li>
+          </ul>
+        </li>
+        <!-- end: ACTIVITIES DROPDOWN -->
+        <!-- start: LANGUAGE SWITCHER -->
+        <!--<li class="dropdown" uib-dropdown on-toggle="toggled(open)">
+                <a href class="dropdown-toggle" uib-dropdown-toggle> <i class="flag-icon" [ngClass]="'flagstyle'| translate"></i><span>&nbsp;{{language.selected}}</span> </a>
+                <ul role="menu" class="dropdown-menu dropdown-light animated fadeInUpShort ">
+                    <li ng-repeat="(localeId, langName) in language.available">
+                        <a (click)="language.set(localeId, $event)" href="javascript:void(0)" class="menu-toggler"> {{langName}} </a>
+                    </li>
+                </ul>
+            </li>-->
+        <!-- end: LANGUAGE SWITCHER -->
+      </ul>
+      <!-- start: MENU TOGGLER FOR MOBILE DEVICES -->
+      <div class="close-handle visible-xs-block menu-toggler" (click)="mobileFolderCollapsed = true" (swipeup)="mobileFolderCollapsed = true">
+        <div class="arrow-left"></div>
+        <div class="arrow-right"></div>
+      </div>
+      <!-- end: MENU TOGGLER FOR MOBILE DEVICES -->
+    </div>
+    <!-- <button class="sidebar-mobile-toggler dropdown-off-sidebar btn hidden-md hidden-lg" (click)="toggleRightSidebar()" v-pressable>
+        &nbsp;
+    </button>
+    <button class="dropdown-off-sidebar btn hidden-sm hidden-xs" (click)="toggleRightSidebar()" v-pressable>
+        &nbsp;
+    </button> -->
+    <!-- end: NAVBAR COLLAPSE -->
+  </header>
+</div>

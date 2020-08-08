@@ -1,0 +1,134 @@
+<p-dialog [header]="title" [(visible)]="show" [modal]="true">
+  <div class="form-container" [ngClass]="{'csspinner load1' : showSpinner}">
+
+    <form [formGroup]="form" *ngIf="form?.customValidateErrors|async as errors" novalidate autocomplete="off">
+
+      <table class="control-table">
+
+        <ng-container *ngFor="let op of formOps">
+          <br>
+          <tr>
+            <ng-container [ngSwitch]="op.type" *ngIf="op.field == 'password2' && !showDelete || op.field !== 'password2'">
+              <td class="icon-col">
+                <i *ngIf="!form.controls[op.field].invalid" class="fa fa-check" style="color: green"></i>
+                <i *ngIf="form.controls[op.field].invalid" class="fa fa-close" style="color: red"></i>
+              </td>
+              <!-- CHECKBOX -->
+              <ng-container *ngSwitchCase="'checkbox'">
+                <td class="field-col">
+                  <p-checkbox [formControlName]="op.field" binary="true" label="{{op.title}}"></p-checkbox>
+                </td>
+              </ng-container>
+              <!-- TEXT BOX -->
+              <ng-container *ngSwitchCase="'text_input'">
+                <td class="field-col">
+                  <span class="ui-float-label">
+                    <input [formControlName]="op.field" id="float-input{{op.field}}" type="text" pInputText >
+                    <label for="float-input{{op.field}}">{{op.title}}</label>
+                  </span>
+                </td>
+              </ng-container>
+              <!-- Password boxes -->
+              <ng-container *ngSwitchCase="'password_input'">
+                <td class="field-col">
+                  <span class="ui-float-label">
+                    <input [formControlName]="op.field" id="float-input{{op.field}}" type="password" pInputText >
+                    <label for="float-input{{op.field}}">{{op.title}}</label>
+                  </span>
+                </td>
+              </ng-container>
+              <!-- NUMBER BOX -->
+              <ng-container *ngSwitchCase="'number_input'">
+                <td class="field-col">
+                  <span class="ui-float-label">
+                    <input [formControlName]="op.field" id="float-input{{op.field}}" type="number" pInputText >
+                    <label for="float-input{{op.field}}">{{op.title}}</label>
+                  </span>
+                </td>
+              </ng-container>
+              <!-- dropdown -->
+              <ng-container *ngSwitchCase="'dropdown'">
+                <td class="field-col"
+                  *ngIf="form && form.object && form.object[op.field] && op && op.data && op.data.options">
+                  <p-dropdown [formControlName]="op.field" [options]="op.data.options" placeholder="Select...">
+                  </p-dropdown>
+                </td>
+              </ng-container>
+              <!-- dropdown cams -->
+              <ng-container *ngSwitchCase="'dropdown_cams'">
+                <td class="field-col"
+                  *ngIf="form && form.object">
+                  <p-dropdown [formControlName]="op.field" [options]="cams" placeholder="Select camera..." >
+                  </p-dropdown>
+                </td>
+              </ng-container>
+
+              <ng-container *ngSwitchDefault>
+                no control found matching this type
+              </ng-container>
+            </ng-container>
+          </tr>
+        </ng-container>
+
+      </table>
+
+        <!-- permissions for users -->
+        <table class="control-table" *ngIf="form?.object['access'] !== 'admin'"  [formGroup]="form2">
+
+          <ng-container *ngFor="let op of formOps2">
+            <br>
+            <tr>
+              <ng-container [ngSwitch]="op.type">
+                <td class="icon-col">
+
+                </td>
+                <!-- CHECKBOX -->
+                <ng-container *ngSwitchCase="'checkbox'">
+                  <td class="field-col">
+                    <p-checkbox [formControlName]="op.field" binary="true" label="{{op.title}}" ></p-checkbox>
+                  </td>
+                </ng-container>
+                <ng-container *ngSwitchDefault>
+                  no control found matching this type
+                </ng-container>
+              </ng-container>
+            </tr>
+          </ng-container>
+
+        </table>
+
+
+
+      <p *ngIf="errors.name?.length && form.dirty">
+        <br>
+        <i class="pi pi-exclamation-triangle" style="color: red"></i>
+        {{errors.name[0]}}
+      </p>
+      <!-- <p>Form status: {{ form.status | json }}</p> -->
+      <!-- <p>
+      Form class-validator errors: {{errors|json}}
+    </p> -->
+      <!-- <p>
+      Form native errors: {{form?.nativeValidateErrors|async|json}}
+    </p>
+    <p *ngIf="savedItem">
+      Saved item: {{savedItem|json}}
+    </p> -->
+      <br>
+      <div class="button-box">
+        <button pButton type="button" *ngIf="showDelete" class="ui-button-danger" icon="pi pi-trash" label="Delete"
+          (click)="onDeleteClick()"></button>
+        <button pButton type="button" *ngIf="showReset" class="ui-button-secondary" icon="pi pi-undo" label="Reset"
+          (click)="onResetClick()"></button>
+        <button pButton type="button" *ngIf="showClear" (click)="onClearClick()" class="ui-button-secondary"
+          icon="pi pi-circle-off" label="Clear"></button>
+        <button pButton type="button" *ngIf="showCancel" class="ui-button-secondary" icon="pi pi-times" label="Cancel"
+          (click)="onCancelClick()"></button>
+        <button pButton type="button" (click)="onSaveClick()" class="ui-button-success" icon="pi pi-save" label="Save"
+          [disabled]="!form.valid"></button>
+
+      </div>
+    </form>
+
+  </div>
+</p-dialog>

@@ -1,0 +1,5 @@
+<div class="content">
+<ng-container *ngFor="let gate of gates" >
+  <app-gate-item [gate]="gate" [event]="eventOf(gate)" style="padding: 5px"></app-gate-item>
+</ng-container>
+</div>

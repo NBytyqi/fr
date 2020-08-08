@@ -1,0 +1,38 @@
+<!--main app container-->
+<div class="backend-app-container" [ngClass]="app.layout.layoutName" [class.app-mobile]="app.isMobile" [class.app-boxed-page]="app.layout.isBoxedPage"
+  [class.app-navbar-fixed]="app.layout.isNavbarFixed" [class.app-left-sidebar-closed]="app.layout.isLeftSidebarClosed" [class.app-left-sidebar-fixed]="app.layout.isLeftSidebarFixed"
+  [class.app-right-sidebar-open]="!app.layout.isRightSidebarClosed">
+  <!-- toaster directive -->
+  <!--<div toastContainer toaster-options="{'position-class': 'toast-top-right', 'close-button':true}"></div>-->
+  <!-- / toaster directive -->
+
+  <!--left sidebar -->
+  <app-sidebar></app-sidebar>
+
+  <div class="app-content" [ngClass]="loading" [class.app-mobile-slide-out]="!app.layout.isLeftSidebarMobileClosed && app.isSmallDevice"
+    [class.app-right-sidebar-open]="!app.layout.isRightSidebarClosed">
+
+    <!-- inner TOP NAVBAR -->
+    <app-top-navbar (RightSidebarClick)="toggleRightSidebar()" (LeftSidebarClick)="toggleLeftSidebar()"></app-top-navbar>
+
+    <!--inner horizontal menu-->
+    <!--<app-horizontal-menu class="navbar navbar-default horizontal-menu collapse" uib-collapse="horizontalNavbarCollapsed" off-click="menuInit(true)" off-click-if='!horizontalNavbarCollapsed' off-click-filter="'#horizontal-menu-toggler'"></app-horizontal-menu>-->
+
+    <!-- start: MAIN CONTENT -->
+    <div class="main-content">
+      <div class="wrap-content container fade-in-up" id="container">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+    <!-- end: MAIN CONTENT -->
+
+  </div>
+
+  <!-- footer -->
+  <app-footer></app-footer>
+
+
+  <!--site settings panel popout-->
+  <!-- <app-site-settings-right-popout></app-site-settings-right-popout> -->
+</div>
+

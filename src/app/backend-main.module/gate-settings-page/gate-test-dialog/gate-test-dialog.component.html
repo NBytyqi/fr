@@ -1,0 +1,92 @@
+<p-dialog header="Gate Tester" [(visible)]="visible" [modal]="true">
+  <div *ngIf="gate" class="main-container">
+
+    <div class="control-box">
+      <button pButton type="button" (click)="onGetStatus(gate)" class="ui-button-primary" icon="fa fa-refresh"
+        label="Get Status"></button>
+    </div>
+    <br>
+    <!-- read current state -->
+    <div>
+      <table style="width: 100%;">
+        <tr>
+          <td>Modbus Connection</td>
+          <td>{{modbusStatus?.connected ? 'CONNECTED' : 'NOT CONNECTED'}}
+            <i class="fa fa-check" style="color: green;" *ngIf="modbusStatus?.connected"></i>
+            <i class="fa fa-close" style="color: red;" *ngIf="!modbusStatus?.connected"></i>
+          </td>
+        </tr>
+        <tr>
+          <td>Gate</td>
+          <td>{{modbusStatus?.gateOpen}}</td>
+        </tr>
+        <tr>
+          <td>Gate Sensor</td>
+          <td>{{modbusStatus?.sensor}}</td>
+        </tr>
+        <tr>
+          <td>Output Coil Address</td>
+          <td>{{gate.modbus_write_coiladdress}}</td>
+        </tr>
+        <tr>
+          <td>Sensor Coil Address</td>
+          <td>{{gate.modbus_read_coiladdress}}</td>
+        </tr>
+        <tr>
+          <td>Modbus IP</td>
+          <td>{{gate.modbus_ipaddress}}</td>
+        </tr>
+        <tr>
+          <td>Modbus Port</td>
+          <td>{{gate.modbus_port}}</td>
+        </tr>
+        <tr>
+          <td>Modbus Slave ID</td>
+          <td>{{gate.modbus_slave_id}}</td>
+        </tr>
+      </table>
+    </div>
+
+    <br>
+    <div class="control-box" *ngIf="modbusStatus && modbusStatus.connected" >
+      <!-- test open -->
+      <div>
+        <button pButton type="button" (click)="onTestOpen()" class="ui-button-success" icon="fa fa-caret-square-o-up "
+          label="Send Open Gate Command" [disabled]="!modbusStatus.connected || modbusStatus.gateOpen"></button>
+      </div>
+
+      <br>
+      <!-- test close -->
+      <div>
+        <button pButton type="button" (click)="onTestClose()" class="ui-button-danger" icon="fa fa-caret-square-o-down"
+          label="Send Close Gate Command" [disabled]="!modbusStatus.connected || !modbusStatus.gateOpen"></button>
+      </div>
+
+      <br>
+      <!-- sim car on sensor -->
+      <div>
+        <button pButton type="button" (click)="onCarOnSensor()" class="ui-button-success" icon="fa fa-caret-square-o-down"
+          label="Sim Car On Sensor" [disabled]="!modbusStatus.connected || modbusStatus.sensor"></button>
+      </div>
+
+      <br>
+      <!-- sim car off sensor -->
+      <div>
+        <button pButton type="button" (click)="onCarOffSensor()" class="ui-button-danger" icon="fa fa-caret-square-o-down"
+          label="Sim Car off Sensor" [disabled]="!modbusStatus.connected || !modbusStatus.sensor"></button>
+      </div>
+
+      <br>
+
+      <br>
+      <div class="button-box">
+        <button pButton type="button" class="ui-button-secondary" icon="pi pi-times" label="Close"
+          (click)="onCancelClick()"></button>
+
+      </div>
+    </div>
+    <div class="control-box" *ngIf="!modbusStatus || modbusStatus && !modbusStatus.connected" >
+      <h4>Waiting for connection to Modbus controller... <i class="fa fa-refresh fa-spin"></i> </h4>
+    </div>
+  </div>
+</p-dialog>

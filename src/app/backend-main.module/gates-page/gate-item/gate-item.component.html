@@ -1,0 +1,38 @@
+<p-card [header]="gate.name" [subheader]="event ? 'Plate: ' + event.plate : 'Wating for vehicle..'" [style]="{width: '360px'}" styleClass="ui-card-shadow">
+  <p-header>
+    <img [src]="latestImage" style="height: 260px;">
+  </p-header>
+  <div *ngIf="event" >
+    <table style="width: 80%;">
+      <tr>
+        <td>Recording</td>
+        <td><i class="fa fa-square fa-spin" style="color: red;"></i> {{getDuration()}}</td>
+      </tr>
+      <tr>
+        <td>Blacklisted</td>
+        <td>
+          <i *ngIf="!event.isBlacklisted"  class="fa fa-check" style="color: green;"></i>
+          <i *ngIf="event.isBlacklisted"  class="fa fa-close" style="color: red;"></i>
+          {{event.isBlacklisted ? 'YES' : 'NO'}}
+        </td>
+      </tr>
+    </table>
+  </div>
+  <p-footer>
+    <div *ngIf="event && event.isPendingAction && !event?.isBlacklisted" style="text-align: center;">
+      <button pButton type="button" label="Approve" icon="pi pi-check" style="margin-right: .25em" class="ui-button-success" (click)="approve()"></button>
+    </div>
+    <div *ngIf="event && event.isPendingAction" style="text-align: center; margin-top: 7px;" >
+      <button pButton type="button" label="Deny" icon="pi pi-times" style="margin-right: .25em"
+        class="ui-button-danger" (click)="deny()"> </button>
+      <button *ngIf="!event?.isBlacklisted && authService.user.permission.canAddToBlacklist" pButton type="button" label="Blacklist" icon="pi pi-times" style="margin-right: .25em" class="ui-button-danger" (click)="block()"></button>
+      <button *ngIf="event?.isBlacklisted && authService.user.permission.canOverrideBlacklist"  pButton type="button" label="Override" icon="pi pi-check" class="ui-button-warning" (click)="override()"></button>
+    </div>
+    <div *ngIf="event && !event.isPendingAction" >
+        <h4>Action Sent <i class="fa fa-check" style="color: green;"></i></h4>
+        <h5 *ngIf="event && event.isApproved || event && event.isOverride" ><i class="fa fa-refresh fa-spin"></i> Waiting for gate close/pull off</h5>
+    </div>
+
+
+  </p-footer>
+</p-card>

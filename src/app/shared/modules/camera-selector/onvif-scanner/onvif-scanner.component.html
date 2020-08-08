@@ -1,0 +1,34 @@
+<div class="controls">
+  <button pButton class="ui-button-success" icon="pi pi-check" label="Add Selected" (click)="addSelected()"
+    [disabled]="!selectedOnvifCameras.length || loading || scanning"></button>
+  <button pButton [icon]="!scanning ? 'pi pi-refresh' : 'pi pi-spin pi-refresh spin'" label="Scan"
+    (click)="scanForCameras()" [disabled]="scanning"></button>
+  <button pButton class="ui-button-secondary" icon="pi pi-times" label="Close" (click)="cancel()"
+    [disabled]="scanning"></button>
+</div>
+
+<div [ngClass]="{'csspinner load1' : scanning || loading}">
+  <p-listbox [options]="onvifCameras" [(ngModel)]="selectedOnvifCameras" styleClass="onvif-scanner" [multiple]="true"
+    checkbox="checkbox" [showToggleAll]="false">
+    <p-header>
+      ONVIF Cameras Found... {{hasScanned ? onvifCameras.length : ''}}
+    </p-header>
+    <ng-template let-onvif pTemplate="item">
+      <div class="ui-helper-clearfix" style="display: inline-block;">
+        <i class="fa fa-video-camera" style="width:24px;display:inline-block;vertical-align:middle"></i>
+        {{onvif.value.hostname}}
+        <span *ngIf="onvif.value.exinfo" > - {{onvif.value.exinfo.mac}}</span>
+        <span *ngIf="onvif.value.videoSources && onvif.value.videoSources.length"> -
+          {{onvif.value.videoSources[0].resolution?.width}}x{{onvif.value.videoSources[0].resolution?.width}} -
+          {{onvif.value.videoSources[0].framerate}}fps
+        </span>
+
+        <span *ngIf="!onvif.value.videoSources || onvif.value.videoSources && !onvif.value.videoSources.length"> -
+          Unknown Resolution/FPS (check user/pass)
+        </span>
+
+      </div>
+    </ng-template>
+  </p-listbox>
+</div>
+<span><i class="fa fa-info-circle fa-fw" style="color: grey;"></i> Only shows cameras not already added</span>

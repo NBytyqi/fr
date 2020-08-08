@@ -1,0 +1,67 @@
+<!-- add/remove/set gates here -->
+
+<!-- show gate list -->
+
+<div class="controls">
+  <p-button icon="pi pi-refresh" label="Refresh" (click)="getItems()"></p-button>
+  <p-button icon="pi pi-plus" label="Add New User" (click)="add()"></p-button>
+</div>
+
+
+<p-table #dt [columns]="cols" [loading]="loading" styleClass="ui-table-gates" [value]="items" [paginator]="false" [rows]="14" dataKey="id"
+selectionMode="single" [(selection)]="selectedItem">
+<ng-template pTemplate="caption">
+  List of Users
+  <div class="ui-table-globalfilter-container">
+    <input type="text" pInputText size="50" placeholder="Search"
+      (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:250px;">
+  </div>
+</ng-template>
+<ng-template pTemplate="header" let-columns>
+  <tr>
+    <th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngSwitch]="col.field"
+    [ngClass]="{'snapshot-header': col.field == 'snapshot', 'startDate-header': col.field == 'startDate'}"
+    >
+      {{col.header}}
+      <p-sortIcon [field]="col.field"></p-sortIcon>
+      <input *ngSwitchCase="'gateName'" pInputText type="text" placeholder="Contains" class="ui-column-filter"
+        style="width: 100%;" (input)="dt.filter($event.target.value, col.field, 'contains')">
+      <input *ngSwitchCase="'plate'" pInputText type="text" placeholder="Contains" class="ui-column-filter"
+        style="width: 100%;" (input)="dt.filter($event.target.value, col.field, 'contains')">
+        <input *ngSwitchCase="'startDate'" pInputText type="text" placeholder="Contains" class="ui-column-filter"
+        style="width: 100%;" (input)="dt.filter($event.target.value, col.field, 'contains')">
+    </th>
+    <th style=" text-align: center;">
+
+    </th>
+  </tr>
+</ng-template>
+<ng-template pTemplate="body" let-rowData let-columns="columns">
+  <tr [pSelectableRow]="rowData" [pEditableRow]="rowData">
+    <td>
+      <!-- active -->
+      <i *ngIf="rowData.active" class="fa fa-check-circle" style="color: green;"></i>
+      <!-- inactive -->
+      <i *ngIf="!rowData.active" class="fa fa-check-circle" style="color: grey;"></i>
+    </td>
+    <td>{{rowData.access}}</td>
+    <td>{{rowData.email}}</td>
+    <td>{{rowData.firstname}}</td>
+    <td>{{rowData.lastname}}</td>
+    <td>{{rowData.description}}</td>
+    <td>
+      <button *ngIf="rowData.email !== 'admin'"  pButton class="ui-button-danger" icon="fa fa-close" label="Delete" (click)="delete(rowData)" ></button>
+      <button pButton class="ui-button-secondary" icon="fa fa-edit" label="Edit" (click)="edit(rowData)"></button>
+    </td>
+  </tr>
+</ng-template>
+</p-table>
+
+
+<app-form-generator [item]="selectedItem" [formModel]="formModel" [(show)]="showEditor" [title]="formTitle"
+[showReset]="showFormReset" [showDelete]="showFormDelete" [showClear]="showFormClear" [showCancel]="showFormCancel"
+[showSpinner]="showFormSpinner" (onCancel)="onCancelClicked($event)" (onSave)="onSaveClicked($event)" (onDelete)="onDeleteClicked($event)"
+[disabledFields]="disabledFields">
+</app-form-generator>
+
+

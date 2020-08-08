@@ -1,0 +1,19 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "allowJs": true,
+    "outDir": "../out-tsc/app",
+    "baseUrl": "",
+    "types": ["node"],
+  },
+  "include": ["**/*"],
+  "exclude": [
+    "test.ts",
+    "**/*.spec.ts"
+  ],
+  "files": [],
+  "angularCompilerOptions" : {
+    "preserveWhitespaces": false,
+    "enableIvy": false
+  }
+}

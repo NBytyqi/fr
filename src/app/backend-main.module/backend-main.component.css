@@ -1,0 +1,157 @@
+.backend-app-container {
+  height: 100%;
+}
+
+.main-content {
+  height: 100%;
+  position: relative;
+  background: #f7f7f8;
+}
+
+.wrap-content {
+  height: 100%;
+}
+
+.wrap-content {
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.main-content .container {
+  max-width: none !important;
+  width: 100% !important;
+  display: inline-block;
+  background-color: #ffffff;
+}
+
+.main-content>.container {
+  /* padding-bottom: 50px; */
+}
+
+@media (min-width: 992px) {
+  .main-content {
+    margin-top: 60px;
+    margin-left: 260px;
+    z-index: 1052;
+    -moz-transition: margin-left 0.5s;
+    -o-transition: margin-left 0.5s;
+    -webkit-transition: margin-left 0.5s;
+    transition: margin-left 0.5s;
+  }
+  .app-navbar-fixed .main-content {
+    margin-top: 0;
+  }
+  .app-navbar-fixed .main-content:before,
+  .app-navbar-fixed .main-content:after {
+    content: " ";
+    display: table;
+  }
+  .app-navbar-fixed .main-content:after {
+    clear: both;
+  }
+  .app-boxed-page.app-navbar-fixed .main-content {
+    margin-top: 0;
+  }
+  .app-boxed-page .main-content {
+    min-height: 0;
+    padding-bottom: 50px;
+  }
+  .app-boxed-page .main-content:before,
+  .app-boxed-page .main-content:after {
+    content: " ";
+    display: table;
+  }
+  .app-boxed-page .main-content:after {
+    clear: both;
+  }
+  .app-left-sidebar-closed .main-content {
+    z-index: 1049;
+    margin-left: 70px;
+  }
+}
+
+@media (max-width: 991px) {
+  .main-content {
+    padding-top: 60px;
+  }
+}
+
+@media (min-width: 992px) {
+  .lyt-2 .main-content {
+    margin-left: 220px;
+  }
+}
+
+@media (min-width: 992px) {
+  .lyt-2.app-left-sidebar-closed .main-content {
+    margin-left: 50px !important;
+  }
+}
+
+@media (max-width: 991px) {
+  .app-content {
+    -moz-transition: -moz-transform 300ms ease 0s;
+    -o-transition: -o-transform 300ms ease 0s;
+    -webkit-transition: -webkit-transform 300ms ease;
+    -webkit-transition-delay: 0s;
+    transition: transform 300ms ease 0s;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    z-index: 2;
+  }
+  .app-mobile-slide-out {
+    position: fixed;
+    height: 100%;
+  }
+  .app-mobile-slide-out.app-content {
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+    position: absolute;
+    -webkit-transform: translate3d(260px, 0, 0);
+    transform: translate3d(260px, 0, 0);
+    -moz-transition: -moz-transform 300ms ease 0s;
+    -o-transition: -o-transform 300ms ease 0s;
+    -webkit-transition: -webkit-transform 300ms ease;
+    -webkit-transition-delay: 0s;
+    transition: transform 300ms ease 0s;
+  }
+  .app-right-sidebar-open {
+    position: fixed;
+    height: 100%;
+  }
+  .app-right-sidebar-open.app-content {
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+    /*position: absolute;*/
+    -webkit-transform: translate3d(-260px, 0, 0);
+    transform: translate3d(-260px, 0, 0);
+    -moz-transition: -moz-transform 300ms ease 0s;
+    -o-transition: -o-transform 300ms ease 0s;
+    -webkit-transition: -webkit-transform 300ms ease;
+    -webkit-transition-delay: 0s;
+    transition: transform 300ms ease 0s;
+  }
+}
+
+@media (min-width: 992px) {
+  .app-navbar-fixed {
+    padding-top: 60px;
+  }
+}
+
+.app-content {
+  height: 100%;
+}
+
+.app-content:before,
+.app-content:after {
+  content: " ";
+  display: table;
+}
+
+.app-content:after {
+  clear: both;
+}

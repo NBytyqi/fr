@@ -1,0 +1,31 @@
+.form-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.button-box button {
+  margin: 5px;
+}
+
+.button-box {
+  text-align: center;
+}
+
+.icon-col {
+  width: 20px;
+}
+
+.field-col {
+ /* width: 100%; */
+}
+
+.control-table {
+  width: 100%;
+  max-width: 600px;
+}
+
+.control-table input {
+  width: 100%;
+  font-weight: 700;
+}

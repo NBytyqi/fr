@@ -1,0 +1,25 @@
+
+/* set app to full viewport height, disable scrolling of root element by setting to 'fixed'
+this effectivaly prevents overscrolling on ipand and iphones
+*/
+  #app {
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    position: fixed;
+    overflow: hidden;
+  }
+
+  @media (min-width: 992px) {
+    .app-boxed-page #app {
+      margin: 0 auto;
+      width: 970px;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .app-boxed-page #app {
+      margin: 0 auto;
+      width: 1170px;
+    }
+  }

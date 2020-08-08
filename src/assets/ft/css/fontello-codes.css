@@ -1,0 +1,6 @@
+
+.fa-ok:before { content: '\e800'; } /* '' */
+.fa-eye:before { content: '\e801'; } /* '' */
+.fa-eye-slash:before { content: '\e802'; } /* '' */
+.fa-user:before { content: '\e803'; } /* '' */
+.fa-key:before { content: '\e804'; } /* '' */

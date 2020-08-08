@@ -1,0 +1,89 @@
+<!-- list cameras on system here -->
+<div class="controls">
+  <button pButton icon="pi pi-search" label="Add ONVIF Camera" (click)="scanForCameras()" [disabled]="loading"></button>
+  <!-- <button pButton icon="pi pi-plus" label="Add Custom Camera" (click)="add()" [disabled]="loading"></button> -->
+  <button pButton icon="pi pi-refresh" (click)="refresh()" [disabled]="loading"></button>
+</div>
+
+
+<p-table #dt [columns]="cols" styleClass="ui-table-gates" [value]="cameras" [paginator]="true" [rows]="20" dataKey="id"
+  selectionMode="single" [(selection)]="selectedItem">
+  <ng-template pTemplate="caption">
+    Installed Cameras
+    <div class="ui-table-globalfilter-container">
+      <input type="text" pInputText size="50" placeholder="Search"
+        (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:250px;">
+    </div>
+  </ng-template>
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngSwitch]="col.field" [ngClass]="col.field == 'active' ? 'active-header' : ''" >
+        {{col.header}}
+        <p-sortIcon [field]="col.field"></p-sortIcon>
+        <input *ngSwitchCase="'name'" pInputText type="text" placeholder="Contains" class="ui-column-filter"
+          style="width: 100%;" (input)="dt.filter($event.target.value, col.field, 'contains')">
+        <input *ngSwitchCase="'IPv4'" pInputText type="text" placeholder="Contains" class="ui-column-filter"
+          style="width: 100%;" (input)="dt.filter($event.target.value, col.field, 'contains')">
+      </th>
+      <th style="width: 8em; text-align: center;">
+
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns">
+    <tr [pSelectableRow]="rowData" [pEditableRow]="rowData" class="rowdata">
+      <td>
+        <!-- active -->
+        <i *ngIf="rowData.active && !rowData.isStalled" class="fa fa-check-circle" style="color: green;"></i>
+        <!-- inactive -->
+        <i *ngIf="!rowData.active" class="fa fa-check-circle" style="color: grey;"></i>
+        <!-- active but not connected -->
+        <i *ngIf="rowData.active && rowData.isStalled" class="fa fa-exclamation-triangle " style="color: orange;"></i>
+      </td>
+      <td>{{rowData.cameraNum}} - {{rowData.name}}</td>
+      <td>{{rowData.mac}}</td>
+      <td>{{rowData.IPv4}}</td>
+      <td><strong>{{rowData.username}}</strong>/<strong>{{rowData.password || 'NONE'}}</strong></td>
+      <!-- <td>{{rowData.onvifPort}}</td> -->
+      <td><a (click)="openLiveStream(rowData, rowData.hlsUrlStream1)">  <i class="fa fa-video-camera" style="color: grey;"></i> {{rowData.stream1Width + 'x' + rowData.stream1Height}}
+      </a></td>
+      <td><a (click)="openLiveStream(rowData, rowData.hlsUrlStream2)"><i *ngIf="rowData.stream2Width" class="fa fa-video-camera" style="color: grey;"></i>
+        {{rowData.stream2Width + 'x' + rowData.stream2Height}}
+      </a>
+      <i class="fa fa-camera fa-fw" style="color: grey;" (click)="getLatestSnapshot($event, rowData)"></i></td>
+        <td>{{rowData.addMethod ? rowData.addMetod : 'Onvif Scan'}}</td>
+      <td>
+        <button pButton class="ui-button-secondary" icon="fa fa-edit" (click)="edit(rowData)"></button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<p-dialog header="Scan for ONVIF Cameras" styleClass="onvif-dialog" [modal]="true" [(visible)]="showOnvifScanner">
+  <app-onvif-scanner #onvifScanner (cancelClick)="onCancelOnvifScannerDialog()" (addClick)="add($event)"></app-onvif-scanner>
+</p-dialog>
+
+<p-dialog header="Live Stream" styleClass="hls-dialog" [modal]="true" [(visible)]="showLiveStreamDialog" (onHide)="liveStreamDialogClosed($event)">
+  <app-hls-player #hlsPlayer [liveStreamUrl]="liveStreamUrl" [cam]="liveStreamCam"></app-hls-player>
+</p-dialog>
+
+<p-overlayPanel #latestImageOL appendTo="body">
+    <img [src]="latestImage" alt="Latest Image" />
+</p-overlayPanel>
+
+<app-form-generator
+[item]="selectedItem"
+[formModel]="formModel"
+[(show)]="showEditor"
+[title]="formTitle"
+[showReset]="showFormReset"
+[showDelete]="showFormDelete"
+[showClear]="showFormClear"
+[showCancel]="showFormCancel"
+[showSpinner]="showFormSpinner"
+(onReset)="onResetClicked($event)"
+(onClear)="onClearClicked($event)"
+(onSave)="onSaveClicked($event)"
+(onCancel)="onCancelClicked($event)"
+(onDelete)="onDeleteClicked($event)"
+></app-form-generator>

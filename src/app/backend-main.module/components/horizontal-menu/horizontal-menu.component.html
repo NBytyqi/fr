@@ -1,0 +1,341 @@
+<!-- start: HORIZONTAL MENU -->
+<div class="navbar navbar-default horizontal-menu collapse" [collapse]="horizontalNavbarCollapsed" offClick (onOffClick)="menuInit(true)">
+  <!-- start: HORIZONTAL MENU -->
+  <div class="horizontal-menu-wrapper">
+    <div class="horizontal-nav-container" [appFullHeight]="'window'" ctFullHeightExclusion="#header" ctFullHeightIf="isSmallDevice">
+      <ul class="nav navbar-nav no-border">
+        <li routerLinkActive="active">
+          <a [routerLink]="['dashboard']">
+            <letter-icon data="Dashboard" color="auto" charCount="2" size="sm"></letter-icon> Dashboard </a>
+        </li>
+        <li [ngClass]="{'active':appUIMenuActive}" dropdown autoClose="true">
+          <a href dropdownToggle (click)="false">
+            <letter-icon data="UI Elements" color="auto" charCount="2" size="sm"></letter-icon> UI Elements <span class="caret"></span></a>
+          <ul *dropdownMenu>
+            <li routerLinkActive="active">
+              <a [routerLink]="['pages/elements']">  Elements </a>
+            </li>
+            <li routerLinkActive="active">
+              <a [routerLink]="['pages/buttons']">  Buttons  </a>
+            </li>
+            <li routerLinkActive="active">
+              <a [routerLink]="['pages/linds']">  Links </a>
+            </li>
+            <li class="dropdown-submenu" [ngClass]="{'active': appUiIconActive || appLineIconActive }">
+              <a href="#"> Icons </a>
+              <ul class="dropdown-menu">
+                <li routerLinkActive="active">
+                  <a [routerLink]="['dashboard']">  Font Awesome Icons  </a>
+                </li>
+                <li routerLinkActive="active">
+                  <a [routerLink]="['pages/icons']">  Linear Icons  </a>
+                </li>
+              </ul>
+            </li>
+
+            <li routerLinkActive="active">
+              <a [routerLink]="['pages/modals']">  Modals  </a>
+            </li>
+            <li routerLinkActive="active">
+              <a [routerLink]="['pages/toggle']"> Toggle  </a>
+            </li>
+            <li routerLinkActive="active">
+              <a [routerLink]="['pages/accoudiaons']"> Tabs &amp; Accordions </a>
+            </li>
+            <li routerLinkActive="active">
+              <a [routerLink]="['pages/panels']">  Panels  </a>
+            </li>
+            <li routerLinkActive="active">
+              <a [routerLink]="['pages/notifiacations']">  Notifications  </a>
+            </li>
+            <li routerLinkActive="active">
+              <a [routerLink]="['pages/treeview']">  Treeview  </a>
+            </li>
+            <li routerLinkActive="active">
+              <a [routerLink]="['pages/media']">  Media Object  </a>
+            </li>
+            <li routerLinkActive="active">
+              <a [routerLink]="['pages/playlist']">  Play List  </a>
+            </li>
+            <li routerLinkActive="active">
+              <a [routerLink]="['pages/typography']">  Typography </a>
+            </li>
+
+          </ul>
+        </li>
+        <li class="mega-menu" dropdown [ngClass]="{'active':appTableMenuActive || appFormMenuActive || appLoginMenuActive || appPagesMenuActive}">
+          <a href dropdownToggle (click)="false">
+            <letter-icon data="Components" color="auto" charCount="2" size="sm"></letter-icon> Components <span class="caret"></span></a>
+          <ul *dropdownMenu>
+            <li>
+              <!-- start: MEGA MENU CONTENT -->
+              <div class="mega-menu-content">
+                <div class="col-md-3">
+                  <ul class="mega-sub-menu padding-top-0">
+                    <li>
+                      <span class="mega-menu-sub-title text-uppercase text-light text-bold text-extra-small padding-top-25 padding-bottom-10">Tables</span>
+                      <ul>
+                        <li routerLinkActive="active">
+                          <a [routerLink]="['pages/basictables']"> Basic Tables </a>
+                        </li>
+                        <li routerLinkActive="active">
+                          <a [routerLink]="['pages/responsivetables']">Responsive Tables </a>
+                        </li>
+                        <li routerLinkActive="active">
+                          <a [routerLink]="['pages/dynamictables']">Dynamic Tables </a>
+                        </li>
+                        <li routerLinkActive="active">
+                          <a [routerLink]="['pages/advancedtables']"> Advanced Data Tables </a>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-md-3">
+                  <ul class="mega-sub-menu padding-top-0">
+                    <li>
+                      <span class="mega-menu-sub-title text-uppercase text-light text-bold text-extra-small padding-top-25 padding-bottom-10">Forms</span>
+                      <ul>
+                        <li routerLinkActive="active">
+                          <a routerLink="app.form.elements"> Form Elements </a>
+                        </li>
+                        <li routerLinkActive="active">
+                          <a routerLink="app.form.xeditable"> Form Elements </a>
+                        </li>
+                        <li routerLinkActive="active">
+                          <a routerLink="app.form.texteditor"> Text Editor </a>
+                        </li>
+                        <li routerLinkActive="active">
+                          <a routerLink="app.form.wizard"> Form Wizard </a>
+                        </li>
+                        <li routerLinkActive="active">
+                          <a routerLink="app.form.validation"> Form Validation </a>
+                        </li>
+                        <li routerLinkActive="active">
+                          <a routerLink="app.form.cropping"> Image Cropping </a>
+                        </li>
+                        <li routerLinkActive="active">
+                          <a routerLink="app.form.upload"> Multiple File Upload </a>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-md-3">
+                  <ul class="mega-sub-menu padding-top-0">
+                    <li>
+                      <span class="mega-menu-sub-title text-uppercase text-light text-bold text-extra-small padding-top-25 padding-bottom-10">Login</span>
+                      <ul>
+                        <li routerLinkActive="active">
+                          <a routerLink="login.signin">  Login Form </a>
+                        </li>
+                        <li routerLinkActive="active">
+                          <a routerLink="login.registration">  Registration Form  </a>
+                        </li>
+                        <li routerLinkActive="active">
+                          <a routerLink="login.forgot">  Forgot Password Form </a>
+                        </li>
+                        <li routerLinkActive="active">
+                          <a routerLink="login.lockscreen"> > Lock Screen  </a>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-md-3">
+                  <ul class="mega-sub-menu padding-top-0">
+                    <li>
+                      <span class="mega-menu-sub-title text-uppercase text-light text-bold text-extra-small padding-top-25 padding-bottom-10"> Pages </span>
+                      <ul>
+                        <li routerLinkActive="active">
+                          <a routerLink="app.pages.user"> User Profile </a>
+                        </li>
+                        <li routerLinkActive="active">
+                          <a routerLink="app.pages.invoice"> Invoice </a>
+                        </li>
+                        <li routerLinkActive="active">
+                          <a routerLink="app.pages.timeline">Timeline </a>
+                        </li>
+                        <li routerLinkActive="active">
+                          <a routerLink="app.pages.calendar"> Calendar </a>
+                        </li>
+                        <li routerLinkActive="active">
+                          <a routerLink="app.pages.messages"> Messages </a>
+                        </li>
+                        <li routerLinkActive="active">
+                          <a routerLink="app.pages.blank"> Blank Page </a>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <!-- end: MEGA MENU CONTENT -->
+            </li>
+          </ul>
+        </li>
+        <li [ngClass]="{'active':utilitiesActive || appChartsMenuActive || appMapsMenuActive}"
+          dropdown>
+          <a  uib-dropdown-toggle>
+            <letter-icon data="Page Kits" color="auto" charCount="2" size="sm"></letter-icon> <span> Page Kits</span> <span class="caret"></span></a>
+          <ul *dropdownMenu>
+            <li class="dropdown-header text-uppercase text-light text-bold text-extra-small padding-top-25 padding-bottom-10">
+              Utilities
+            </li>
+            <li routerLinkActive="active">
+              <a routerLink="/search"> Search Results </a>
+            </li>
+            <li routerLinkActive="active">
+              <a routerLink="/404">Error 404 </a>
+            </li>
+            <li routerLinkActive="active">
+              <a routerLink="/500"> Error 500 </a>
+            </li>
+            <li routerLinkActive="active">
+              <a routerLink="/pricing"> Pricing Table </a>
+            </li>
+            <li class="dropdown-header text-uppercase text-light text-bold text-extra-small padding-top-25 padding-bottom-10">
+              Menu Levels
+            </li>
+            <li class="dropdown-submenu">
+              <a href="#">Item 1</a>
+              <ul class="dropdown-menu">
+                <li class="dropdown-submenu" routerLinkActive="active">
+                  <a >Sample Link 1</a>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <a href="#"> Sample Link 1 </a>
+                    </li>
+                    <li>
+                      <a href="#"> Sample Link 2 </a>
+                    </li>
+                    <li>
+                      <a href="#"> Sample Link 3 </a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="dropdown-submenu" routerLinkActive="active">
+                  <a > Sample Link 2</a>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <a href="#"> Sample Link 1d </a>
+                    </li>
+                    <li>
+                      <a href="#"> Sample Link 2 </a>
+                    </li>
+                    <li>
+                      <a href="#"> Sample Link 3 </a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="dropdown-submenu" routerLinkActive="active">
+                  <a > Sample Link 3</a>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <a href="#"> Sample Link 1 </a>
+                    </li>
+                    <li>
+                      <a href="#"> Sample Link 2 </a>
+                    </li>
+                    <li>
+                      <a href="#"> Sample Link 3 </a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li class="dropdown-submenu">
+              <a href="#">Item 2</a>
+              <ul class="dropdown-menu">
+                <li class="dropdown-submenu" routerLinkActive="active">
+                  <a > Sample Link 1</a>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <a href="#"> Sample Link 1 </a>
+                    </li>
+                    <li>
+                      <a href="#"> Sample Link 2 </a>
+                    </li>
+                    <li>
+                      <a href="#"> Sample Link 3 </a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="dropdown-submenu" routerLinkActive="active">
+                  <a > Sample Link 2</a>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <a href="#"> Sample Link 1 </a>
+                    </li>
+                    <li>
+                      <a href="#"> Sample Link 2 </a>
+                    </li>
+                    <li>
+                      <a href="#"> Sample Link 3 </a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="dropdown-submenu" routerLinkActive="active">
+                  <a href="javascript:;">Sample Link 3</a>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <a href="#"> Sample Link 1 </a>
+                    </li>
+                    <li>
+                      <a href="#"> Sample Link 2 </a>
+                    </li>
+                    <li>
+                      <a href="#"> Sample Link 3 </a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li class="dropdown-header text-uppercase text-light text-bold text-extra-small padding-top-25 padding-bottom-10">
+              Utilities
+            </li>
+            <li routerLinkActive="active">
+              <a routerLink="app.maps"> Maps  </a>
+            </li>
+            <li routerLinkActive="active">
+              <a routerLink="app.charts">  Charts  </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown" dropdown>
+          <a href dropdownToggle class="dropdown-toggle nav-user-wrapper" > <img alt="" src="assets/images/avatar-1.jpg"> <span>Ahmed Matwally</span> <span class="caret"></span> </a>
+
+          <ul class="dropdown-menu pull-right animated fadeInRight">
+            <li>
+              <a routerLink="app.pages.user"> My Profile </a>
+            </li>
+            <li>
+              <a routerLink="app.pages.calendar"> My Calendar </a>
+            </li>
+            <li>
+              <a routerLink="app.pages.messages"> My Messages (3) </a>
+            </li>
+            <li>
+              <a routerLink="login.lockscreen"> Lock Screen </a>
+            </li>
+            <li class="divider"></li>
+            <li>
+              <a routerLink="login.signin"> Log Out </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <!-- start: MENU TOGGLER FOR MOBILE DEVICES -->
+    <div class="close-handle visible-xs-block visible-sm-block menu-toggler" (click)="menuInit(true)" (swipeup)="menuInit(true)">
+      <div class="arrow-left"></div>
+      <div class="arrow-right"></div>
+    </div>
+    <!-- end: MENU TOGGLER FOR MOBILE DEVICES -->
+  </div>
+  <!-- end: HORIZONTAL MENU -->
+
+</div>
+<!-- end: HORIZONTAL MENU -->

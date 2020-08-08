@@ -1,0 +1,66 @@
+
+.error-full-page {
+  overflow: hidden;
+}
+
+.error-full-page .page-error {
+  margin-top: 60px;
+}
+
+.page-error {
+  text-align: center;
+}
+
+.page-error .error-number {
+  display: block;
+  font-size: 158px;
+  font-weight: 300;
+  letter-spacing: -10px;
+  line-height: 128px;
+  margin-top: 0;
+  text-align: center;
+}
+
+.text-azure {
+  color: #5B9BD1 !important;
+}
+
+.page-error .error-details h3 {
+  margin-top: 0;
+}
+
+h1, h2, h3, h4, h5 {
+  font-weight: 300;
+  margin-top: 0;
+  color: #5b5b60;
+}
+
+h3, h4, h5 {
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+.page-error .error-details {
+  display: block;
+  padding-top: 0;
+  text-align: center;
+}
+
+.page-error .error-details .btn-return {
+  margin: 10px 0;
+}
+
+.btn-red {
+  background-color: #C82E29;
+  border-color: #C82E29;
+  color: #ffffff;
+}
+.btn {
+  transition: all 0.3s ease 0s !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  position: relative;
+  border-radius: 2px;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}

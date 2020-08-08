@@ -1,0 +1,13 @@
+<h3>You are logged in as {{authService.user.email}}</h3>
+<h5>First Name: {{authService.user.firstname}}</h5>
+<h5>Last Name: {{authService.user.firstname}}</h5>
+<br>
+<br>
+<div class="controls">
+  <span class="ui-float-label">
+    <input [(ngModel)]="newPassword" id="float-input" type="password" pInputText>
+    <label for="float-input">New Password</label>
+  </span>
+  <br>
+  <p-button icon="pi pi-key" label="Change Password" (click)="changePassword(newPassword)" [disabled]="!newPassword"></p-button>
+</div>

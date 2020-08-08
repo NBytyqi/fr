@@ -1,0 +1,8 @@
+<div class="angular-notifications-container">
+  <div class="angular-notifications-icon overlay" *ngIf="visible">
+    <div *ngIf="hideCount">{{count}}</div>
+  </div>
+  <div class="notification-inner">
+    <ng-content></ng-content>
+  </div>
+</div>

@@ -1,0 +1,198 @@
+<!--global style container-->
+<div [ngClass]="app.layout.layoutName" [class.app-mobile]="app.isMobile"
+  [class.app-navbar-fixed]="app.layout.isNavbarFixed"
+  [class.app-left-sidebar-closed]="app.layout.isLeftSidebarClosed && !app.isSmallDevice"
+  [class.app-left-sidebar-fixed]="app.layout.isLeftSidebarFixed"
+  [class.app-right-sidebar-open]="!app.layout.isRightSidebarClosed"
+  [class.app-mobile-slide-out]="(app.isSmallDevice && !app.layout.isLeftSidebarClosed)">
+  <!-- start: MAIN NAVIGATION MENU -->
+  <nav>
+    <div class="navbar-title">
+      Main Navigation
+    </div>
+    <ul class="main-navigation-menu">
+
+
+      <li routerLinkActive="active" *ngIf="['Customer'].indexOf(dataService.effectiveRole) > -1">
+        <a [routerLink]="['gates']">
+          <div class="item-content">
+            <div class="item-media">
+              <i class="fa fa-users"></i>
+            </div>
+            <div class="item-inner">
+              <span class="title"> Gates Live </span>
+            </div>
+          </div>
+        </a>
+      </li>
+
+      <li routerLinkActive="active" *ngIf="['SiteAdmin','Distributor'].indexOf(dataService.effectiveRole) > -1">
+        <a [routerLink]="['systemmanagement']">
+          <div class="item-content">
+            <div class="item-media">
+              <i class="fa fa-hdd-o"></i>
+            </div>
+            <div class="item-inner">
+              <span class="title"> System Management </span>
+            </div>
+          </div>
+        </a>
+      </li>
+
+
+      <li routerLinkActive="active">
+        <a [routerLink]="['gates']">
+          <div class="item-content">
+            <div class="item-media">
+              <i class="fa fa-check-circle"></i>
+            </div>
+            <div class="item-inner">
+              <span class="title"> Gate Control </span>
+            </div>
+          </div>
+        </a>
+      </li>
+
+
+
+
+
+      <div  class="navbar-title">
+        <span>Logging</span>
+      </div>
+      <li *ngIf="authService.user.permission.canSearch" routerLinkActive="active">
+        <a [routerLink]="['history']">
+          <div class="item-content">
+            <div class="item-media">
+              <i class="fa fa-history"></i>
+            </div>
+            <div class="item-inner">
+              <span class="title"> History </span>
+            </div>
+          </div>
+        </a>
+      </li>
+
+      <li routerLinkActive="active">
+        <a [routerLink]="['blacklist']">
+          <div class="item-content">
+            <div class="item-media">
+              <i class="fa fa-flag"></i>
+            </div>
+            <div class="item-inner">
+              <span class="title"> Blacklist </span>
+            </div>
+          </div>
+        </a>
+      </li>
+
+
+      <div *ngIf="authService.user.permission.canEditSettings" class="navbar-title">
+        <span>Settings</span>
+      </div>
+
+      <li *ngIf="authService.user.permission.canEditSettings" routerLinkActive="active">
+        <a [routerLink]="['users']">
+          <div class="item-content">
+            <div class="item-media">
+              <i class="fa fa-users"></i>
+            </div>
+            <div class="item-inner">
+              <span class="title"> Users </span>
+            </div>
+          </div>
+        </a>
+      </li>
+
+      <li *ngIf="authService.user.permission.canEditSettings" routerLinkActive="active">
+        <a [routerLink]="['camerasettings']">
+          <div class="item-content">
+            <div class="item-media">
+              <i class="fa fa-video-camera"></i>
+            </div>
+            <div class="item-inner">
+              <span class="title"> Cameras </span>
+            </div>
+          </div>
+        </a>
+      </li>
+
+      <li *ngIf="authService.user.permission.canEditSettings" routerLinkActive="active">
+        <a [routerLink]="['gatesettings']">
+          <div class="item-content">
+            <div class="item-media">
+              <i class="fa fa-car"></i>
+            </div>
+            <div class="item-inner">
+              <span class="title"> Gate Setup </span>
+            </div>
+          </div>
+        </a>
+      </li>
+
+      <li *ngIf="authService.user.permission.canEditSettings && false" routerLinkActive="active">
+        <a [routerLink]="['systemsettings']">
+          <div class="item-content">
+            <div class="item-media">
+              <i class="fa fa-cog"></i>
+            </div>
+            <div class="item-inner">
+              <span class="title"> System Settings </span>
+            </div>
+          </div>
+        </a>
+      </li>
+
+
+    </ul>
+
+    <!-- end: MAIN NAVIGATION MENU -->
+
+    <div *ngIf="true" class="navbar-title">
+      <span>Account</span>
+    </div>
+    <ul *ngIf="true" class="folders">
+      <li>
+
+
+      <li routerLinkActive="active">
+        <a [routerLink]="['myaccount']">
+          <div class="item-content">
+            <div class="item-media">
+              <i class="fa fa-user-circle-o"></i>
+            </div>
+            <div class="item-inner">
+              <span class="title"> My Account </span>
+            </div>
+          </div>
+        </a>
+      </li>
+
+      <li routerLinkActive="active">
+        <a [routerLink]="['/auth/logout']">
+          <div class="item-content">
+            <div class="item-media">
+              <i class="fa fa-lock"></i>
+            </div>
+            <div class="item-inner">
+              <span class="title"> Logout </span>
+            </div>
+          </div>
+        </a>
+      </li>
+
+    </ul>
+
+    <!-- end: FEATURES -->
+  </nav>
+</div>
+
+
+<!--about dialog  -->
+<p-dialog header="About Gate Control" [(visible)]="showAbout">
+
+  <p><strong>Gate Control</strong></p>
+
+  <p>Copyright 2020</p>
+
+</p-dialog>

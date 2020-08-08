@@ -1,0 +1,54 @@
+<!--global style container-->
+<div
+[ngClass]="app.layout.layoutName"
+[class.app-mobile]="app.isMobile"
+[class.app-navbar-fixed]="app.layout.isNavbarFixed"
+[class.app-left-sidebar-closed]="app.layout.isLeftSidebarClosed"
+[class.app-left-sidebar-fixed]="app.layout.isLeftSidebarFixed"
+[class.app-right-sidebar-open]="!app.layout.isRightSidebarClosed"
+[class.app-mobile-slide-out]="app.isMobile && !app.layout.isLeftSidebarClosed">
+<!-- start: USER OPTIONS -->
+<!--fill in the suer info here-->
+<div class="nav-user-wrapper">
+  <div class="media">
+    <div class="media-left">
+      <letter-icon data="{{ dataService.currentUser ? dataService.currentUser.firstname : 'admin' }}" color="#7F8C8D" size="sm" ></letter-icon>
+    </div>
+    <div *ngIf="dataService.currentUser" class="media-body">
+      <span class="media-heading text-white">{{dataService.currentUser.firstname + ' ' + dataService.currentUser.lastname | shorten: 20: '...'}}</span>
+      <div class="text-small text-white-transparent">
+        {{dataService.effectiveRole}}
+      </div>
+    </div>
+
+    <div class="media-right media-middle">
+      <div dropdown (onShown)="onUserDropdown()">
+        <a href dropdownToggle (click)="false" class="dropdown-toggle btn btn-transparent text-white"><i class="fa fa-caret-down"></i> </a>
+        <ul *dropdownMenu class="dropdown-menu pull-right " role="menu">
+          <!-- <li>
+            <a class="dropdown-item" [routerLink]="['pages/user']"> My Profile </a>
+          </li>
+          <li>
+            <a class="dropdown-item" [routerLink]="['/pages/calandar']"> My Calendar </a>
+          </li>
+          <li>
+            <a class="dropdown-item" [routerLink]="['/pages/messages']"> My Messages (3) </a>
+          </li>
+          <li>
+            <a class="dropdown-item" [routerLink]="['/pages/lockscreen']"> Lock Screen </a>
+          </li>
+          <li class="divider"></li> -->
+          <li *ngIf="dataService.impersonationUser">
+            <a class="dropdown-item" (click)="dataService.clearImpersonation()"> End Inpersonation </a>
+          </li>
+          <li>
+            <a class="dropdown-item" [routerLink]="['/auth/logout']"> Log Out </a>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<!-- end: USER OPTIONS -->

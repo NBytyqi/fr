@@ -1,0 +1,65 @@
+<!-- add/remove/set gates here -->
+
+<!-- show gate list -->
+
+<div class="controls">
+  <p-button icon="pi pi-plus" label="Add New Gate" (click)="add()"></p-button>
+</div>
+
+
+<p-table #dt [columns]="cols" styleClass="ui-table-gates" [value]="gates" [paginator]="false" [rows]="20" dataKey="id" selectionMode="single" [(selection)]="selectedItem">
+  <ng-template pTemplate="caption">
+      List of Gates
+      <div class="ui-table-globalfilter-container">
+          <input type="text" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:250px;">
+      </div>
+  </ng-template>
+  <ng-template pTemplate="header" let-columns>
+      <tr>
+          <th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngSwitch]="col.field">
+              {{col.header}}
+              <p-sortIcon [field]="col.field"></p-sortIcon>
+              <input *ngSwitchCase="'name'" pInputText type="text" placeholder="Contains" class="ui-column-filter" style="width: 100%;" (input)="dt.filter($event.target.value, col.field, 'contains')">
+              <input *ngSwitchCase="'year'" pInputText type="text" placeholder="Contains" class="ui-column-filter" style="width: 100%;" (input)="dt.filter($event.target.value, col.field, 'contains')">
+          </th>
+          <th style=" text-align: center;">
+              Modify
+          </th>
+      </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr [pSelectableRow]="rowData" [pEditableRow]="rowData">
+          <td>{{rowData.name}}</td>
+          <td>{{rowData.description}}</td>
+          <td>{{rowData.type}}</td>
+          <td>{{rowData.camera?.IPv4 || "No Camera Linked"}} - {{rowData.camera?.name}} </td>
+          <td>{{rowData.modbus_ipaddress + ':' + rowData.modbus_port}}</td>
+          <td>{{rowData.modbus_read_coiladdress}}</td>
+          <td>{{rowData.modbus_write_coiladdress}}</td>
+          <td>
+            <button pButton class="ui-button-secondary" icon="fa fa-edit" label="Edit" (click)="edit(rowData)"></button>
+            <button pButton class="ui-button-warning" style="margin-left: 5px" icon="fa fa-bolt" label="Test" (click)="test(rowData)"></button>
+          </td>
+      </tr>
+  </ng-template>
+</p-table>
+
+<app-form-generator
+[item]="selectedItem"
+[formModel]="formModel"
+[(show)]="showEditor"
+[title]="formTitle"
+[showReset]="showFormReset"
+[showDelete]="showFormDelete"
+[showClear]="showFormClear"
+[showCancel]="showFormCancel"
+[showSpinner]="showFormSpinner"
+(onReset)="onResetClicked($event)"
+(onClear)="onClearClicked($event)"
+(onSave)="onSaveClicked($event)"
+(onCancel)="onCancelClicked($event)"
+(onDelete)="onDeleteClicked($event)"
+></app-form-generator>
+
+<app-gate-test-dialog [(visible)]="showGateTestDialog" [gate]="selectedItem"></app-gate-test-dialog>
+

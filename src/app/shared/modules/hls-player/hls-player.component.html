@@ -1,0 +1,21 @@
+      <!-- selected video -->
+      <h4>{{cam?.name}} - {{cam?.IPv4}}</h4>
+      <div>Actual stream time: <strong>{{realVidTimeStr}}</strong>  Delay: <strong>{{ttl / 1000}}</strong> sec from live</div>
+        <div class="video-container" (touchstart)="touchstarttest($event)"
+        [style.display]="cam !== null || playing ? 'visible' : 'hidden'">
+
+        <!-- <p-progressSpinner *ngIf="loading" class="pbar"></p-progressSpinner> -->
+        <div #zoombox class="zoombox">
+          <video *ngIf="type === 'hlsjs' || type === 'native'"
+            [style.visibility]="type === 'hlsjs' ? 'visible' : 'collapsed'" #video (playing)="videoPlaying($event)"
+            (click)="videoClicked($event)" muted controls playsinline></video>
+          <!-- <canvas *ngIf="type === 'jsmpeg'" [style.visibility]="type === 'jsmpeg' ? 'visible' : 'collapsed'" #videocanvas></canvas> -->
+        </div>
+
+        <!-- <div class="title">
+          <h2 >
+            {{cam ? cam.name : ''}}
+          </h2>
+        </div> -->
+
+      </div>

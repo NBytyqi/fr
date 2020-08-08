@@ -1,0 +1,20 @@
+<!--global style container-->
+<div
+[ngClass]="app.layout.layoutName"
+[class.app-mobile]="app.isMobile"
+[class.app-navbar-fixed]="app.layout.isNavbarFixed"
+[class.app-left-sidebar-closed]="app.layout.isLeftSidebarClosed || app.isSmallDevice"
+[class.app-left-sidebar-fixed]="app.layout.isLeftSidebarFixed"
+[class.app-right-sidebar-open]="!app.layout.isRightSidebarClosed"
+>
+  <!--left sidebar #sidebar-->
+  <div offClick (onOffClick)="ClickedOutsideOfLeftSideBar()" class="sidebar app-aside hidden-print" id="sidebar" [class.mobile-slide-out]="!app.layout.isLeftSidebarMobileClosed && app.isSmallDevice">
+    <div [perfectScrollbar]="{suppressScrollX: true}" class="sidebar-container">
+      <div>
+        <!-- <app-search-form></app-search-form> -->
+        <app-user-options></app-user-options>
+        <app-sidebar-nav></app-sidebar-nav>
+      </div>
+    </div>
+  </div>
+</div>

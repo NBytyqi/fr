@@ -1,0 +1,91 @@
+@media (min-width: 992px) {
+  .app-left-sidebar-closed .nav-user-wrapper .media-body,
+  .app-left-sidebar-closed .nav-user-wrapper .media-right {
+    display: none;
+  }
+}
+
+.nav-user-wrapper {
+  padding: 30px 10px;
+  position: relative;
+  background: #2C2F3B !important;
+  overflow: visible !important;
+  z-index: 1;
+}
+
+.nav-user-wrapper:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+
+}
+
+.nav-user-wrapper .media {
+  overflow: visible;
+}
+
+.nav-user-wrapper .media .media-body {
+  white-space: nowrap;
+}
+
+.nav-user-wrapper .media .media-right a {
+  font-size: 12px;
+  padding-right: 25px;
+  padding-left: 15px;
+  padding-right: 15px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.nav-user-wrapper .media .media-right a:hover {
+  color: white;
+}
+
+.nav-user-wrapper .media .media-right .dropdown-menu a {
+  color: #8e8e93;
+}
+
+.nav-user-wrapper .media .media-right .dropdown-menu a:hover {
+  color: #2C2F3B;
+}
+
+.profile-card-photo {
+  background-color: #fff;
+  border-radius: 8px;
+  display: inline-block;
+  height: 40px;
+  width: 40px;
+}
+
+.profile-card-photo img {
+  width: 100%;
+  border-radius: 5px;
+}
+
+.lyt-2 .profile-card-photo {
+  width: 30px;
+  height: 30px;
+  background: none;
+}
+
+.lyt-2 #sidebar .profile-card-photo img {
+  border-radius: 50%;
+}
+
+.lyt-3 .nav-user-wrapper {
+  background: none !important;
+}
+
+.lyt-3 .nav-user-wrapper:before {
+  display: none;
+}
+
+.lyt-3 .nav-user-wrapper .profile-card-photo {
+  -moz-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
